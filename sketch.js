@@ -25,8 +25,8 @@ function setup() {
     new Canvas(windowWidth, windowHeight);
     playerSprite = new Sprite();
     playerSprite.addAni('standing', 'assets/standing.png');
-    playerSprite.addAni('left','assets/walkingLeft1.png','assets/walkingLeft2.png');
-    playerSprite.addAni('right','assets/walkingRight1.png','assets/walkingRight2.png')
+    playerSprite.addAni('left','assets/walkingLeft1.png','assets/walkingLeft2.png', 'assets/walkingLeft3.png');
+    playerSprite.addAni('right','assets/walkingRight1.png','assets/walkingRight2.png', 'assets/walkingRight3.png')
     playerSprite.addAni('jumping', 'assets/jumping.png');
     playerSprite.width = 60;
     playerSprite.debug = false;
