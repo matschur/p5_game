@@ -13,6 +13,8 @@ let heart;
 let lives = 3;
 let gameOver;
 let gameOverSwitch = false;
+let fire;
+let keySwitch;
 
 function preload(){
 backgroundImg = loadImage("assets/back2.jpg");
@@ -23,6 +25,7 @@ gameOver = loadImage("assets/gameOver.jpg");
 
 function setup() {
     new Canvas(windowWidth, windowHeight);
+
     playerSprite = new Sprite();
     playerSprite.addAni('standing', 'assets/standing.png');
     playerSprite.addAni('left','assets/walkingLeft1.png','assets/walkingLeft2.png', 'assets/walkingLeft3.png');
@@ -35,12 +38,23 @@ function setup() {
     playerSprite.x = 900;
     //playerSprite.gravityScale = 0.5;
     playerSprite.mass = 1;
+
+    fire = new Sprite();
+    fire.addAni('fire', 'assets/fire.png');
+    fire.x = 200;
+    fire.y = windowHeight-200;
+    fire.static = true;
+    fire.debug = true;
+
     floor = new Sprite(width/2,windowHeight-20,windowWidth,50,STATIC);
     floor.opacity = 0;
+
     world.gravity.y = gravity;
+
+
     key = new Sprite();
     key.addAni('key','assets/key.png');
-    key.x = 80;
+    key.x = windowWidth-150;
     key.y = 100;
     key.static = true;
     key.scale = 0.6;
@@ -50,7 +64,7 @@ function setup() {
    
     while (plataformas.length < 3) {
         let plataforma = new plataformas.Sprite();
-        plataforma.x = plataformas.length * 200;
+        plataforma.x = windowWidth - (plataformas.length * 200+200);
         plataforma.y = plataformas.length * 120+200;
         plataforma.addAni('plataforma','assets/metalPlatform.png');
         plataforma.scale = 0.5;
@@ -64,7 +78,7 @@ function setup() {
     while (obstacles.length < 3){
 
         let obstacle = new obstacles.Sprite();
-        obstacle.x = obstacles.length * 250;
+        obstacle.x = windowWidth-(obstacles.length * 250);
         obstacle.y = -800 * obstacles.length;
         obstacle.scale = 0.5;
         obstacle.addAni('obstaculo','assets/obs0.png');
@@ -72,9 +86,9 @@ function setup() {
         obstacle.gravityScale = 0.1;
     }
 
-    obstacles[0].x = 470;
-    obstacles[1].x = 320;
-    obstacles[2].x = 110;
+    obstacles[0].x = windowWidth-470;
+    obstacles[1].x = windowWidth-320;
+    obstacles[2].x = windowWidth-110;
 }
 
 function update() {
@@ -83,20 +97,24 @@ function update() {
 
 //Sistema de Vidas
    if(lives == 3){
-       image(heart,width-100,50,50,50);
-       image(heart,width-150,50,50,50);
-       image(heart,width-200,50,50,50);
+       image(heart,100,50,50,50);
+       image(heart,150,50,50,50);
+       image(heart,200,50,50,50);
    }
    if(lives == 2){
-       image(heart,width-150,50,50,50);
-       image(heart,width-200,50,50,50);
+       image(heart,150,50,50,50);
+       image(heart,200,50,50,50);
    }
    if(lives == 1){
-       image(heart,width-200,50,50,50);
+       image(heart,200,50,50,50);
    }
 
    if(playerSprite.collides(obstacles)){
        lives -= 1;
+   }
+
+   if(playerSprite.collides(fire)&&!keySwitch) {
+        lives -= 1;
    }
 
    if(lives == 0){
@@ -129,20 +147,26 @@ function update() {
     }
 
 
-    //key Interaction
+    //key and fire Interaction
 
     if(playerSprite.collides(key)){
         //print("Encontraste la llave!");
-        winSwitch = true;
+        keySwitch = true;
+        key.position.x = -500;
        
     }
+
+    if (playerSprite.collides(fire)&&keySwitch) {
+        winSwitch = true;
+    }
+
     if(winSwitch){
         image(uWin,0,0,width,height);
         for(var i = 0;i<3;i++){
             plataformas[i].position.x = -500;
             obstacles[i].position.x = -1000;
         }
-        key.position.x = -500;
+
     }
     //playerSprite.speed = 3;
 
