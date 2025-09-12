@@ -15,7 +15,7 @@ let gameOver;
 let gameOverSwitch = false;
 
 function preload(){
-backgroundImg = loadImage("assets/back2.png");
+backgroundImg = loadImage("assets/back2.jpg");
 uWin = loadImage("assets/uWIN.jpg");
 heart = loadImage("assets/heart.png");
 gameOver = loadImage("assets/gameOver.jpg");
@@ -28,13 +28,14 @@ function setup() {
     playerSprite.addAni('left','assets/walkingLeft1.png','assets/walkingLeft2.png', 'assets/walkingLeft3.png');
     playerSprite.addAni('right','assets/walkingRight1.png','assets/walkingRight2.png', 'assets/walkingRight3.png')
     playerSprite.addAni('jumping', 'assets/jumping.png');
-    playerSprite.width = 60;
-    playerSprite.debug = false;
+    playerSprite.width = 70;
+    playerSprite.height = 70
+    playerSprite.debug = true;
     playerSprite.scale = 1.5;
     playerSprite.x = 900;
     //playerSprite.gravityScale = 0.5;
     playerSprite.mass = 1;
-    floor = new Sprite(width/2,windowHeight+10,windowWidth,50,STATIC);
+    floor = new Sprite(width/2,windowHeight-20,windowWidth,50,STATIC);
     floor.opacity = 0;
     world.gravity.y = gravity;
     key = new Sprite();
@@ -53,8 +54,9 @@ function setup() {
         plataforma.y = plataformas.length * 120+200;
         plataforma.addAni('plataforma','assets/metalPlatform.png');
         plataforma.scale = 0.5;
-        plataforma.debug = false;
+        plataforma.debug = true;
         plataforma.width = 100;
+        plataforma.height = 50;
         plataforma.static = true;
     }
 
@@ -73,7 +75,6 @@ function setup() {
     obstacles[0].x = 470;
     obstacles[1].x = 320;
     obstacles[2].x = 110;
-    print(obstacles[0]);
 }
 
 function update() {
@@ -108,20 +109,6 @@ function update() {
         //playerSprite.velocity.y = 0;
         jumpSwitch = true;
     }
-
-    if(playerSprite.collides(plataformas[2])){
-        plataformas[2].position.x += random(-5,5);
-   
-    }
-    if(playerSprite.collides(plataformas[1])){
-        plataformas[1].position.x += random(-5,5);
-       
-    }
-    if(playerSprite.collides(plataformas[0])){
-        plataformas[0].position.x += random(-5,5);
-       
-    }
-
 
     if(playerSprite.collides(plataformas)){
         obstaclesSwitch = true;
@@ -170,7 +157,7 @@ function update() {
     }
 
     if (kb.pressing('w')&&jumpSwitch==true) {
-        playerSprite.velocity.y = -50;
+        playerSprite.velocity.y = -100;
         playerSprite.changeAni('jumping');
         jumpSwitch = false;
        
