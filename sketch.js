@@ -205,5 +205,6 @@ function update() {
        obstacles[0].x = -1000;
        obstacles[1].x = -1000;
        obstacles[2].x = -1000;
+       fire.x = -1000;
    }
 }
