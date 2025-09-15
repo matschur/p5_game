@@ -210,6 +210,6 @@ function update() {
        obstacles[1].x = -1000;
        obstacles[2].x = -1000;
        fire.x = -1000;
-       playerSprite.x = -1000;
+       playerSprite.x = -2000;
    }
 }
