@@ -31,23 +31,23 @@ function setup() {
     playerSprite.addAni('left','assets/walkingLeft1.png','assets/walkingLeft2.png', 'assets/walkingLeft3.png');
     playerSprite.addAni('right','assets/walkingRight1.png','assets/walkingRight2.png', 'assets/walkingRight3.png')
     playerSprite.addAni('jumping', 'assets/jumping.png');
-    playerSprite.width = 70;
-    playerSprite.height = 70
-    playerSprite.debug = true;
-    playerSprite.scale = 1.5;
-    playerSprite.x = 900;
+    playerSprite.w = 50;
+    playerSprite.h = 50;
+    //playerSprite.debug = true;
+    //playerSprite.scale = 1;
+    playerSprite.x = windowWidth/2 - 200;
     //playerSprite.gravityScale = 0.5;
     playerSprite.mass = 1;
 
     fire = new Sprite();
     fire.addAni('fire', 'assets/fire.png');
-    fire.x = 200;
-    fire.y = windowHeight-200;
+    fire.x = (windowWidth/7);
+    fire.y = windowHeight-(windowHeight/4);
     fire.static = true;
-    fire.debug = true;
+    //fire.debug = true;
 
     floor = new Sprite(width/2,windowHeight-20,windowWidth,50,STATIC);
-    floor.opacity = 0;
+    floor.opacity = 0;  
 
     world.gravity.y = gravity;
 
@@ -60,17 +60,18 @@ function setup() {
     key.scale = 0.6;
 
     plataformas = new Group();
-    plataformas.color = 'red';
+    //plataformas.color = 'red';
    
     while (plataformas.length < 3) {
         let plataforma = new plataformas.Sprite();
-        plataforma.x = windowWidth - (plataformas.length * 200+200);
-        plataforma.y = plataformas.length * 120+200;
+        plataforma.x = windowWidth - (plataformas.length * (windowWidth/8) + windowWidth / 10);
+        plataforma.y = plataformas.length * (windowHeight/6) + windowHeight / 3;
         plataforma.addAni('plataforma','assets/metalPlatform.png');
-        plataforma.scale = 0.5;
-        plataforma.debug = true;
+        plataforma.scale = 0.4;
         plataforma.width = 100;
-        plataforma.height = 50;
+        plataforma.height = 30;
+        //plataforma.debug = true;
+
         plataforma.static = true;
     }
 
@@ -78,17 +79,19 @@ function setup() {
     while (obstacles.length < 3){
 
         let obstacle = new obstacles.Sprite();
-        obstacle.x = windowWidth-(obstacles.length * 250);
+        obstacle.x = windowWidth - obstacles.length * (windowWidth/8)-200;
         obstacle.y = -800 * obstacles.length;
-        obstacle.scale = 0.5;
+        obstacle.scale = 0.25;
         obstacle.addAni('obstaculo','assets/obs0.png');
         obstacle.static = true;
         obstacle.gravityScale = 0.1;
     }
 
-    obstacles[0].x = windowWidth-470;
-    obstacles[1].x = windowWidth-320;
-    obstacles[2].x = windowWidth-110;
+    //obstacles[0].x = windowWidth-470;
+    //obstacles[1].x = windowWidth-320;
+    //obstacles[2].x = windowWidth-110;
+
+    print(windowWidth, windowHeight);
 }
 
 function update() {
@@ -166,6 +169,7 @@ function update() {
             plataformas[i].position.x = -500;
             obstacles[i].position.x = -1000;
         }
+        fire.x = -1000;
 
     }
     //playerSprite.speed = 3;
@@ -181,7 +185,7 @@ function update() {
     }
 
     if (kb.pressing('w')&&jumpSwitch==true) {
-        playerSprite.velocity.y = -100;
+        playerSprite.velocity.y = -75;
         playerSprite.changeAni('jumping');
         jumpSwitch = false;
        
@@ -206,5 +210,6 @@ function update() {
        obstacles[1].x = -1000;
        obstacles[2].x = -1000;
        fire.x = -1000;
+       playerSprite.x = -1000;
    }
 }
