@@ -170,7 +170,7 @@ function update() {
             obstacles[i].position.x = -1000;
         }
         fire.x = -1000;
-
+        playerSprite.x = -2000;
     }
     //playerSprite.speed = 3;
 
